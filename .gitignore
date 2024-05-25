@@ -78,6 +78,9 @@ target/
 # Docker volume
 docker-volume/
 
+# Airflow logs
+logs/scheduler
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
