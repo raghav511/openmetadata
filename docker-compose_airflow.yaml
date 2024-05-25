@@ -90,6 +90,8 @@ services:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
+    networks:
+      - app_net
     volumes:
       - postgres-db-volume:/var/lib/postgresql/data
     healthcheck:
@@ -101,6 +103,8 @@ services:
 
   redis:
     image: redis:latest
+    networks:
+      - app_net
     expose:
       - 6379
     healthcheck:
@@ -116,6 +120,8 @@ services:
     command: webserver
     ports:
       - "8080:8080"
+    networks:
+      - app_net
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
       interval: 30s
@@ -131,6 +137,8 @@ services:
   airflow-scheduler:
     <<: *airflow-common
     command: scheduler
+    networks:
+      - app_net
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
       interval: 30s
@@ -146,6 +154,8 @@ services:
   airflow-worker:
     <<: *airflow-common
     command: celery worker
+    networks:
+      - app_net
     healthcheck:
       # yamllint disable rule:line-length
       test:
@@ -169,6 +179,8 @@ services:
   airflow-triggerer:
     <<: *airflow-common
     command: triggerer
+    networks:
+      - app_net
     healthcheck:
       test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
       interval: 30s
@@ -245,6 +257,8 @@ services:
     volumes:
       - ${AIRFLOW_PROJ_DIR:-.}:/sources
       - /Users/avy/salesforce/:/app/local_files
+    networks:
+      - app_net
       
 
   airflow-cli:
@@ -259,6 +273,8 @@ services:
       - bash
       - -c
       - airflow
+    networks:
+      - app_net
 
   # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
   # or by explicitly targeted on the command line e.g. docker-compose up flower.
@@ -271,6 +287,8 @@ services:
     #   - flower
     ports:
       - "5555:5555"
+    networks:
+      - app_net
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:5555/"]
       interval: 30s
@@ -283,5 +301,8 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
+networks:
+  app_net:
+    driver: bridge
 volumes:
   postgres-db-volume:
