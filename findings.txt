@@ -1,0 +1,12 @@
+SHA ID = 5900c5c
+1. To run multiple yaml files in docker compose, use the below:
+      docker compose -f <file1.yaml> -f <file2.yaml> .... up
+2. To establish between the containers, add Networks with same name for all the required services
+3. To inspect network in docker, do below:
+      docker ps
+      docker network list
+      docker inspect <container id> | grep Network
+3. In docker, the service may not run in the port after the networks is changed. In such scenario, we can run by:
+      HTTP://<container name>:port/
+4. Follow this guide for docker JWT auth: https://docs.open-metadata.org/v1.3.x/deployment/security/enable-jwt-tokens
+5. Follow the above link for auth token as well.
