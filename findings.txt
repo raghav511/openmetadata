@@ -1,6 +1,8 @@
 SHA ID = 5900c5c
 1. To run multiple yaml files in docker compose, use the below:
       docker compose -f <file1.yaml> -f <file2.yaml> .... up
+2. While doing the above step, if there are services that use the same port, there
+   will be conflict, so change the port of one of them.
 2. To establish between the containers, add Networks with same name for all the required services
 3. To inspect network in docker, do below:
       docker ps
