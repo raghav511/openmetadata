@@ -3,29 +3,34 @@ name: pytest
 on: [push, pull_request]
 
 jobs:
-  build:
-
+  check_tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8", "3.9", "3.10"]
-
+    outputs:
+      tests_present: ${{ steps.check_files.outputs.tests_present }}
     steps:
       - uses: actions/checkout@v4
       - name: Check for test files
         id: check_files
         run: |
-          echo "::set-output name=tests_present::$(if ls test_*.py 1> /dev/null 2>&1; then echo 'true'; else echo 'false'; fi)"
-      - name: Exit if no tests
-        if: steps.check_files.outputs.tests_present == 'false'
-        run: |
-          echo "No test files present, exiting pytest workflow."
-          exit 0 
+          if ls test_*.py 1> /dev/null 2>&1; then 
+            echo 'tests_present=true' >> $GITHUB_ENV; 
+          else 
+            echo 'tests_present=false' >> $GITHUB_ENV; 
+          fi
+
+  build:
+    needs: check_tests
+    if: needs.check_tests.outputs.tests_present == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+    steps:
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      # You can test your matrix by printing the current Python version
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
       - name: Install dependencies
