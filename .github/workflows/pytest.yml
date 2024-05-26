@@ -12,6 +12,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Check for test files
+        id: check_files
+        run: |
+          echo "::set-output name=tests_present::$(if ls test_*.py 1> /dev/null 2>&1; then echo 'true'; else echo 'false'; fi)"
+      - name: Exit if no tests
+        if: steps.check_files.outputs.tests_present == 'false'
+        run: |
+          echo "No test files present, exiting pytest workflow."
+          exit 0 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
