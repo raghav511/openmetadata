@@ -18,7 +18,7 @@ jobs:
             echo 'tests_present=false' >> $GITHUB_ENV; 
           fi
 
-  build:
+  do_pytest:
     needs: check_tests
     if: needs.check_tests.outputs.tests_present == 'true'
     runs-on: ubuntu-latest
