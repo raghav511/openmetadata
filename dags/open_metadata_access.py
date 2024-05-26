@@ -33,18 +33,17 @@ def list_db():
     else:
         print('Connection failed!')
     print('Status code:', response.status_code)
-    print('Response:', response.json())
+    # print('Response:', response.json())
+    print(response.json())
 
 
 def create_db():
     url = "http://openmetadata_server:8585/api/v1/databases"
     request_body = {'name': 'test_db_260524',
-                    'service': 'test'}
+                    'service': 'raghav_snowflake'}
     response = requests.post(url, headers=headers, json=request_body)
     if response.status_code == 200:
-        db_list = response.json()
-        db = db_list.get('name')
-        print(db)
+        print('database created')
     else:
         print('Connection failed!', response.status_code)
 
