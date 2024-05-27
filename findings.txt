@@ -1,9 +1,9 @@
-SHA ID = 5900c5c
+SHA ID = 5900c5c , date = 25th May 2024
 1. To run multiple yaml files in docker compose, use the below:
       docker compose -f <file1.yaml> -f <file2.yaml> .... up
 2. While doing the above step, if there are services that use the same port, there
    will be conflict, so change the port of one of them.
-2. To establish between the containers, add Networks with same name for all the required services
+2. To establish network connection between the containers, add Networks with same name for all the required services
 3. To inspect network in docker, do below:
       docker ps
       docker network list
@@ -12,3 +12,15 @@ SHA ID = 5900c5c
       HTTP://<container name>:port/
 4. Follow this guide for docker JWT auth: https://docs.open-metadata.org/v1.3.x/deployment/security/enable-jwt-tokens
 5. Follow the above link for auth token as well.
+6. Bearer token can be found at settings -> bots -> Ingestion Bot
+
+date = 26th May 2024
+1. For post api actions, such as create db in openmetadata, we need a valid service
+      like snowflake, or bigquery etc.
+2. Created a service in openmetadata databases using snowflake, and then used this service for
+      for post api calls.
+3. Before this created a snowflake trial account.
+4. Ingested metadata using metadata ui , go to settings -> services -> databases
+      -> select service -> add ingestion
+4. Created CI workflows using github actions for catching lint errors and pytest python
+files.
