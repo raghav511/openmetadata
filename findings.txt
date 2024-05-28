@@ -29,4 +29,5 @@ date = 28th May 2024
 1. Added codeql.yml workflow for code check
 2. Added ftp server compose file1
 3. Learned about git hooks, git revert, git merge
-   
+4. For verbose output of commands use -v . 
+      example : avy@Avys-Air openmetadata % sftp -v -P 21 myuser@127.0.0.1

@@ -1,16 +1,14 @@
 version: '3'
 
 services:
-  vsftpd:
-    image: fauria/vsftpd
+  ftp:
+    image: delfer/alpine-ftp-server
     ports:
-      - "20:20"
       - "21:21"
-      - "21100-21110:21100-21110"
+      - "21000-21010:21000-21010"
     environment:
-      FTP_USER: myuser
-      FTP_PASS: mypass
-      PASV_ADDRESS: localhost
+      USERS: "one|12345"
+      ADDRESS: ftp.site.domain
     networks:
       - app_net
 
