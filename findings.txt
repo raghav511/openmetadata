@@ -24,3 +24,9 @@ date = 26th May 2024
       -> select service -> add ingestion
 4. Created CI workflows using github actions for catching lint errors and pytest python
 files.
+
+date = 28th May 2024
+1. Added codeql.yml workflow for code check
+2. Added ftp server compose file1
+3. Learned about git hooks, git revert, git merge
+   
