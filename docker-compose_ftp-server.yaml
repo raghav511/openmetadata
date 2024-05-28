@@ -11,3 +11,9 @@ services:
       FTP_USER: myuser
       FTP_PASS: mypass
       PASV_ADDRESS: localhost
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
