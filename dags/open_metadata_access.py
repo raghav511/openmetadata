@@ -12,7 +12,6 @@ default_args = {
     'retries': 1,
 }
 
-
 dag = DAG(
     dag_id='open_metadata_access',
     default_args=default_args,
